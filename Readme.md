@@ -469,3 +469,9 @@ def start_socket():
             print(e)
 ```
 - Son olarak verilerimizi göndermek için oluşturduğumuz soket ile `sendall` ile gönderip mesajımızı encode ediyoruz yani mesajı byte formatına dönüşütürp gönderiyoruz.   
+
+
+
+Yararlandığım kaynaklar:
+- https://github.com/murtazahassan
+- https://chuoling.github.io/mediapipe/solutions/hands.html

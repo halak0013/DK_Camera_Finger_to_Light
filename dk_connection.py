@@ -2,7 +2,7 @@ import requests
 import socket
 
 
-deneyap_ip = '192.168.2.239'
+deneyap_ip = '192.168.*.*'
 kamera_port = 80
 
 
