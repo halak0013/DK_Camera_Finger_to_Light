@@ -1,21 +1,21 @@
 # Parmakla led yakma   
-Bu prozemizde mediapipe kütüpahanesini kullanarak parmaklarımızı tanıtıp her eklemimize indis verip parmaklarımız açıp kapatmamızla Deneyap Kart ile oluşturulmuş basit bir led devresindeki ledleri kontrol etmeyi öğreneceğiz.
+Bu projemizde mediapipe kütüphanesini kullanarak parmaklarımızı tanıtıp her eklememize indis verip parmaklarımız açıp kapatmamızla Deneyap Kart ile oluşturulmuş basit bir led devresindeki ledleri kontrol etmeyi öğreneceğiz.
 
 
 <img src="doc/sheme.png" height = 300>
 
-## Uygulamaya bşalamadan önce bazı hatırlatmalar!:
-- Projeyi indireceğiniz yerin yolunda Türkçe karakter ve boşluk olmamamsı gerekmektedir. Yoksa kütüphane bulma işleminde sıkıntı çıkmaktadır. aşağıda olmaması gerekn birkaç örnek
+## Uygulamaya başlamadan önce bazı hatırlatmalar!:
+- Projeyi indireceğiniz yerin yolunda Türkçe karakter ve boşluk olmaması gerekmektedir. Yoksa kütüphane bulma işleminde sıkıntı çıkmaktadır. aşağıda olmaması gereken birkaç örnek
   - /home/kullanici/TürkçeKarakter
   - /home/kullanici/yol/proje dosyası
 - Ledlerin +,- bacaklarına dikkat etmek gerekmektedir(uzun(+) bacaklar kart pinlerine gelecektir)
 - Sistemde python yüklü olması gerekmektedir
-  - Pardus ve debian tabanlı sistemlerde otomatik gelmektedir. Gelmediyse `sudd apt install python3 python3-pip` uç birime yapıştırıp yüklebilirsiniz.
-  - Windows için mağzadan aratıp kurabilirisiniz.
+  - Pardus ve debian tabanlı sistemlerde otomatik gelmektedir. Gelmediyse `sudd apt install python3 python3-pip` uç birime yapıştırıp yükleyebilirsiniz.
+  - Windows için mağazadan aratıp kurabilirsiniz.
 
 
 ## İndirme
-Projeyi indirmek için github sayfasındaki Yeşil **Code** yazan kısımdan zip olarak inder basmanız gerekmektedir.
+Projeyi indirmek için github sayfasındaki Yeşil **Code** yazan kısımdan zip olarak indir tuşuna(download zip) basmanız gerekmektedir.
 <img src="doc/git_download.png" height=300>
 > Git kullananlar için direk depoyu klonlayabilirler
 ```console
@@ -33,9 +33,9 @@ const int udpPort = 12345;               // UDP portu
 ```
   - ssid -> Ağ adınız
   - password -> Ağ şifreniz
-  - udpAddress -> Bilgisayarınızın yerel ip adresi (x.x kısmıları doldurulması gerekmektedir. bazen 192.168 ile başlamayabilir)
-#### İp adresinizi bulmak için
-- Pardusta Mağzadan **Sistem Gözlem Merkezi** uygulamasını kurup ağ kısmından bulabilirisiniz. Veya Pardus Hakkında uygulamasından bulabilirsiniz
+  - udpAddress -> Bilgisayarınızın yerel ip adresi (x.x kısımları doldurulması gerekmektedir. bazen 192.168 ile başlamayabilir)
+#### Ip adresinizi bulmak için
+- Pardusta Mağazadan **Sistem Gözlem Merkezi** uygulamasını kurup ağ kısmından bulabilirsiniz. Veya Pardus Hakkında uygulamasından bulabilirsiniz
 
 <img src="doc/Pars_ip.png" height=300>
 <img src="doc/Pars_ip2.png" height=300>
@@ -44,7 +44,7 @@ const int udpPort = 12345;               // UDP portu
 
 ----
 
-- Windows için ise **Görev yönetcisinden** ağ kısmından bulabilirsiniz.
+- Windows için ise **Görev yöneticisinden** ağ kısmından bulabilirsiniz.
 <img src="doc/win_ip.png" height=300>
   - Veya cmd içinde `ipconfig` yazarak öğrenebilirsiniz
 
@@ -57,14 +57,14 @@ int lights[] = { D9, D10, D12, D13, D14 };  // Deneyap Kart 1A v2
 Son olarak kartınızı seçip yükleme işlemini yapabilirsiniz.
 
 ### Python Kodu ayarları
-İndirdiğinz projenin olduğu konumda istediğiniz kod editörünü kullanarak açmanız gerekmektedir. Bu projede vs code kullanacağız.
+İndirdiğiniz projenin olduğu konumda istediğiniz kod editörünü kullanarak açmanız gerekmektedir. Bu projede vs code kullanacağız.
 
-- İlk olarak eklentilerden Python ekentilerini kurmanız gerekmektedir.
+- İlk olarak eklentilerden Python eklentilerini kurmanız gerekmektedir.
 
 <img src="doc/extension.png" height=150>
 
-- Sonrasında **FingerCount.py** dosyasını açıp `shift+ctl+p` tuşlarına basıp `env` yazıdğınız zaman Python ortamı oluşturun veya Python: create environment basmanız gerekmektedir. Sonarsında sanal ortamı oluşturmanız gerekmektedir. 
-- Oluşturma sırasında size bağımılıkları yüklemenizi isteyen bir seçenek çıkabilir. Seçip otomatik olarak kurulumu yapabilirisiniz
+- Sonrasında **FingerCount.py** dosyasını açıp `shift+ctl+p` tuşlarına basıp `env` yazdığınız zaman Python ortamı oluşturun veya Python: create environment basmanız gerekmektedir. Sonarsında sanal ortamı oluşturmanız gerekmektedir. 
+- Oluşturma sırasında size bağımlıkları yüklemenizi isteyen bir seçenek çıkabilir. Seçip otomatik olarak kurulumu yapabilirsiniz
 
 <img src="doc/requirements.png" height=70>
 
