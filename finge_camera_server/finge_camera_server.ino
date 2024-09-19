@@ -8,7 +8,7 @@ const char* udpAddress = "192.168.x.x";  // UDP istemcisinin IP adresi
 const int udpPort = 12345;                 // UDP portu
 int fingers[5] = { 0, 0, 0, 0, 0 };
 //int lights[] = {D9, D12, D13, D14, D15 }; // Deneyap Kart
-int lights[] = { D9, D10, D12, D13, D14 };
+int lights[] = { D9, D10, D12, D13, D14 };  // Deneyap Kart 1A v2
 
 WiFiUDP udp;
 
