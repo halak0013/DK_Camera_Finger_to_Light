@@ -54,7 +54,7 @@ class FingerCount:
                     self.fingers = [0, 0, 0, 0, 0]
                 print(self.fingers)
                 if self.source == "sock":
-                    self.send_data(str(self.fingers))
+                    self.send_data()
 
             cv2.imshow("Finger Count", img)
             if cv2.waitKey(5) & 0xFF == 27:  # Press 'ESC' to exit
