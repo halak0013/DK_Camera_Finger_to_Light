@@ -63,5 +63,5 @@ class FingerCount:
 
 
 if __name__ == "__main__":
-    fc = FingerCount(source="sock")
+    fc = FingerCount(source="camera")
     fc.run()

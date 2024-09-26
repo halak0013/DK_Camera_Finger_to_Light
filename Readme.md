@@ -10,7 +10,7 @@ Bu projemizde mediapipe kütüphanesini kullanarak parmaklarımızı tanıtıp h
   - /home/kullanici/yol/proje dosyası
 - Ledlerin +,- bacaklarına dikkat etmek gerekmektedir(uzun(+) bacaklar kart pinlerine gelecektir)
 - Sistemde python yüklü olması gerekmektedir
-  - Pardus ve debian tabanlı sistemlerde otomatik gelmektedir. Gelmediyse `sudd apt install python3 python3-pip` uç birime yapıştırıp yükleyebilirsiniz.
+  - Pardus ve debian tabanlı sistemlerde otomatik gelmektedir. Gelmediyse `sudo apt install python3 python3-pip` uç birime yapıştırıp yükleyebilirsiniz.
   - Windows için mağazadan aratıp kurabilirsiniz.
 
 
