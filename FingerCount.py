@@ -15,6 +15,12 @@ class FingerCount:
             self.cap = cv2.VideoCapture(0)
             self.cap.set(3, self.target_width)
             self.cap.set(4, self.target_height)
+        if source == "sock2":
+            self.cap = cv2.VideoCapture(0)
+            self.cap.set(3, self.target_width)
+            self.cap.set(4, self.target_height)
+            self.sock_server = SocketServer()
+            self.image_receiver = ImageReceiver(self.sock_server)
         else:
             self.sock_server = SocketServer()
             self.image_receiver = ImageReceiver(self.sock_server)
@@ -30,6 +36,9 @@ class FingerCount:
         if self.source == "sock":
             img = self.image_receiver.get_image()
             succes = img is not None
+        elif self.source == "sock2":
+            succes, img = self.cap.read()
+            self.image_receiver.get_image()
         else:
             succes, img = self.cap.read()
         return succes, img
@@ -37,6 +46,7 @@ class FingerCount:
     def send_data(self):
         result = ','.join(map(str, self.fingers))
         self.sock_server.send_data(f"{result}")
+        print("deneme")
 
     def run(self):
         while True:
@@ -54,14 +64,16 @@ class FingerCount:
                     self.fingers = [0, 0, 0, 0, 0]
                 print(self.fingers)
                 if self.source == "sock":
+                    print("soket")
+                    self.send_data()
+                elif self.source == "sock2":
+                    print("soket2")
                     self.send_data()
 
             cv2.imshow("Finger Count", img)
             if cv2.waitKey(5) & 0xFF == 27:  # Press 'ESC' to exit
                 print("Çık")
                 break
-
-
 if __name__ == "__main__":
-    fc = FingerCount(source="camera")
+    fc = FingerCount(source="sock2")
     fc.run()

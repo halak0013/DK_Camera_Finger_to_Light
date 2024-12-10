@@ -3,28 +3,24 @@ import cv2
 import numpy as np
 
 class SocketServer:
-    def __init__(self, udp_ip="0.0.0.0", udp_port=12345):
+    def __init__(self, udp_ip="0.0.0.0", udp_port=23451):
         self.udp_ip = udp_ip
         self.udp_port = udp_port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind((self.udp_ip, self.udp_port))
         self.conected_adress = None
+        self.init=True
         print("Listening on {}:{}".format(self.udp_ip, self.udp_port))
 
     def receive_data(self):
         data_buffer = b''
-        while True:
+        while self.init:
             try:
                 packet, addr = self.sock.recvfrom(65536)  # Maksimum UDP paket boyutu
                 self.conected_adress = addr
                 data_buffer += packet
-
-                # Veri tamamlandığında, görüntüyü işleme
-                if len(packet) < 1400:  # Son paket daha küçük olacaktır
-                    np_arr = np.frombuffer(data_buffer, np.uint8)
-                    img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
-                    data_buffer = b''  # Bufferı sıfırlayın
-                    return img  # Görüntüyü döndür
+                print(packet)
+                self.init=False
 
             except Exception as e:
                 print("Error in receiving data:", e)

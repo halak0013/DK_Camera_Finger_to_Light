@@ -2,22 +2,22 @@
 #include <WiFiUdp.h>
 #include "esp_camera.h"
 
-const char* ssid = "xxxxxxx";
-const char* password = "xxxxxxx";
-const char* udpAddress = "192.168.x.x";  // UDP istemcisinin IP adresi
-const int udpPort = 12345;               // UDP portu
-int fingers[5] = { 0, 0, 0, 0, 0 };
-//int lights[] = {D9, D12, D13, D14, D15 }; // Deneyap Kart
-int lights[] = { D9, D10, D12, D13, A7 };  // Deneyap Kart 1A v2
+const char* ssid = "EYUP DENEYAP";
+const char* password = "MTH#122016?!.";
 
+// const char* udpAddress = "192.168.2.120";  // UDP istemcisinin IP adresi
+const char* udpAddress = "192.168.1.38";  // UDP istemcisinin IP adresi, mavi a7 
+const int udpPort = 23451;                 // UDP portu
+int fingers[5] = { 0, 0, 0, 0, 0 };
+int lights[] = {D9, D12, D13, D14, D15 }; // Deneyap Kart
+//int lights[] = {D13, D14, D12, D10, A7 };  // Deneyap Kart 1A v2
+int valueToSend =0;
 WiFiUDP udp;
 
-void cameraInit(void);
 
 void setup() {
   Serial.begin(115200);
   Serial.println("Başladı");
-  cameraInit();  // Kamera konfigürasyonu yapıldı
 
   WiFi.begin(ssid, password);
 
@@ -78,30 +78,12 @@ void receiveDataTask(void* parameter) {
 void sendUdpDataTask(void* parameter) {
   const int maxPacketSize = 1400;  // UDP paketi başına maksimum boyut
   while (true) {
-    camera_fb_t* fb = esp_camera_fb_get();  // Çerçeve verisini al
+    udp.beginPacket(udpAddress, udpPort);
+    valueToSend+=1.0;
+    udp.write((const uint8_t*)&valueToSend, sizeof(valueToSend));
+    udp.endPacket();
 
-    if (!fb) {
-      Serial.println("Kamera verisi alınamadı");
-      vTaskDelay(1000 / portTICK_PERIOD_MS);
-      continue;
-    }
-
-    uint32_t totalBytes = fb->len;
-    uint32_t bytesSent = 0;
-
-    while (bytesSent < totalBytes) {
-      uint32_t bytesToSend = min((uint32_t)maxPacketSize, totalBytes - bytesSent);
-      udp.beginPacket(udpAddress, udpPort);
-      udp.write(fb->buf + bytesSent, bytesToSend);
-      udp.endPacket();
-
-      bytesSent += bytesToSend;
-    }
-
-    //Serial.printf("Sent %d bytes in multiple packets\n", totalBytes);
-
-    esp_camera_fb_return(fb);             // Çerçeve belleğini serbest bırak
-    vTaskDelay(33 / portTICK_PERIOD_MS);  // 30 fps için 33ms bekle
+    vTaskDelay(1000 / portTICK_PERIOD_MS);  // 30 fps için 33ms bekle
   }
 }
 
@@ -132,48 +114,4 @@ void finger_to_light() {
       digitalWrite(lights[i], LOW);
     }
   }
-}
-
-void cameraInit(void) {
-  // Kamera ayarları (kodunuzdaki gibi)
-  camera_config_t config;
-  config.ledc_channel = LEDC_CHANNEL_0;
-  config.ledc_timer = LEDC_TIMER_0;
-  config.pin_d0 = CAMD2;
-  config.pin_d1 = CAMD3;
-  config.pin_d2 = CAMD4;
-  config.pin_d3 = CAMD5;
-  config.pin_d4 = CAMD6;
-  config.pin_d5 = CAMD7;
-  config.pin_d6 = CAMD8;
-  config.pin_d7 = CAMD9;
-  config.pin_xclk = CAMXC;
-  config.pin_pclk = CAMPC;
-  config.pin_vsync = CAMV;
-  config.pin_href = CAMH;
-  config.pin_sscb_sda = CAMSD;
-  config.pin_sscb_scl = CAMSC;
-  config.pin_pwdn = -1;
-  config.pin_reset = -1;
-
-  config.xclk_freq_hz = 15000000;
-  config.frame_size = FRAMESIZE_UXGA;
-  config.pixel_format = PIXFORMAT_JPEG;
-  config.grab_mode = CAMERA_GRAB_LATEST;
-  config.fb_location = CAMERA_FB_IN_PSRAM;
-  config.fb_count = 2;
-  config.jpeg_quality = 30;
-
-  if (!psramFound()) {
-    config.fb_location = CAMERA_FB_IN_DRAM;
-    config.fb_count = 1;
-  }
-
-  esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
-    Serial.printf("Kamera başlatma hatası 0x%x", err);
-    return;
-  }
-
-  sensor_t* s = esp_camera_sensor_get();
 }
